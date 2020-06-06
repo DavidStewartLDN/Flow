@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-// import axios from 'axios';
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Button, Card, Title, TextInput } from 'react-native-paper';
 
@@ -18,7 +18,7 @@ const DiaryScreen = () => {
 
   // const getMantras = () => {
   //   axios
-  //     .get('https://help-for-heroes.herokuapp.com/mantras')
+  //     .get('http://localhost:5000/mantras')
   //     .then((response) => setMantras(response.data))
   //     .catch((error) => {
   //       console.error(error);
@@ -31,7 +31,7 @@ const DiaryScreen = () => {
 
   const postMantra = () => {
     axios
-      .post('https://help-for-heroes.herokuapp.com/mantras/1', {
+      .post('http://localhost:5000/mantras/1', {
         mantra: formInput,
       })
       .catch((error) => {
