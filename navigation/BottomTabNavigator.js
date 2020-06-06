@@ -4,6 +4,7 @@ import * as React from 'react';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
+import DiaryScreen from '../screens/DiaryScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -22,6 +23,16 @@ export default function BottomTabNavigator({ navigation, route }) {
         options={{
           title: 'Get Started',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Links"
+        component={DiaryScreen}
+        options={{
+          title: 'Mantras',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-happy" />
+          ),
         }}
       />
       <BottomTab.Screen
