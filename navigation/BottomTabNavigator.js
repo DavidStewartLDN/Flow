@@ -26,7 +26,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Links"
+        name="Diary"
         component={DiaryScreen}
         options={{
           title: 'Mantras',
@@ -53,6 +53,8 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'How to get started';
+    case 'Diary':
+      return 'Start your diary here';
     case 'Links':
       return 'Links to learn more';
   }

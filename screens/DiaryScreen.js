@@ -12,7 +12,7 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 
 const DiaryScreen = () => {
-  const diaryData = require('../assets/data/DiaryData.json');
+  const diaryData = require('../assets/data/diaryData.json');
   const [mantras, setMantras] = useState([]);
   const [formInput, setFormInput] = useState('');
 

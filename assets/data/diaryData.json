@@ -1,1 +1,12 @@
-[{"mantra_id":2,"mantra":" I feel beautiful, I am beautiful","user_id_fk":1},{"mantra_id":3,"mantra":"I am proud of myself","user_id_fk":1},{"mantra_id":4,"mantra":"I am free to be myself","user_id_fk":1},{"mantra_id":5,"mantra":"I choose to radiate happiness and love","user_id_fk":1},{"mantra_id":6,"mantra":"I am unique and confident","user_id_fk":1},{"mantra_id":9,"mantra":"You are strong, you can do it!","user_id_fk":1},{"mantra_id":14,"mantra":"My name Jeff","user_id_fk":1},{"mantra_id":15,"mantra":"Check","user_id_fk":1},{"mantra_id":16,"mantra":"Check 2","user_id_fk":1},{"mantra_id":17,"mantra":"Check 3","user_id_fk":1},{"mantra_id":18,"mantra":"Check 4","user_id_fk":1}]
+[{"mantra_id":2,"mantra":" I feel beautiful, I am beautiful","user_id_fk":1},
+  {"mantra_id":3,"mantra":"I am proud of myself","user_id_fk":1},
+  {"mantra_id":4,"mantra":"I am free to be myself","user_id_fk":1},
+  {"mantra_id":5,"mantra":"I choose to radiate happiness and love","user_id_fk":1},
+  {"mantra_id":6,"mantra":"I am unique and confident","user_id_fk":1},
+  {"mantra_id":9,"mantra":"You are strong, you can do it!","user_id_fk":1},
+  {"mantra_id":14,"mantra":"My name Jeff","user_id_fk":1},
+  {"mantra_id":15,"mantra":"Check","user_id_fk":1},
+  {"mantra_id":16,"mantra":"Check 2","user_id_fk":1},
+  {"mantra_id":17,"mantra":"Check 3","user_id_fk":1},
+  {"mantra_id":18,"mantra":"Check 4","user_id_fk":1},
+  {"mantra_id":19,"mantra":"I wonder what the meaning of life is","user_id_fk":1}]
