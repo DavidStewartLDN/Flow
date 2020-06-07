@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
@@ -16,17 +17,17 @@ const DiaryScreen = () => {
   const [mantras, setMantras] = useState([]);
   const [formInput, setFormInput] = useState('');
 
-  // const getMantras = () => {
-  //   axios
-  //     .get('http://localhost:5000/mantras')
-  //     .then((response) => setMantras(response.data))
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
+  const getMantras = () => {
+    axios
+      .get('http://localhost:5000/mantras')
+      .then((response) => setMantras(response.data))
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
-    setMantras(diaryData);
+    getMantras();
   }, []);
 
   const postMantra = () => {
