@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
@@ -12,27 +13,26 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 
 const DiaryScreen = () => {
-  const diaryData = require('../assets/data/diaryData.json');
-  const [mantras, setMantras] = useState([]);
+  const [diaryEntries, setDiaryEntries] = useState([]);
   const [formInput, setFormInput] = useState('');
 
-  // const getMantras = () => {
-  //   axios
-  //     .get('http://localhost:5000/mantras')
-  //     .then((response) => setMantras(response.data))
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
+  const getDiaryEntries = () => {
+    axios
+      .get('http://localhost:5000/diary_entries')
+      .then((response) => setDiaryEntries(response.data))
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
-    setMantras(diaryData);
+    getDiaryEntries();
   }, []);
 
-  const postMantra = () => {
+  const postDiaryEntry = () => {
     axios
-      .post('http://localhost:5000/mantras/1', {
-        mantra: formInput,
+      .post('http://localhost:5000/diary_entries/1', {
+        entry: formInput,
       })
       .catch((error) => {
         alert('Please try again later');
@@ -41,11 +41,9 @@ const DiaryScreen = () => {
   };
 
   const handleSubmit = () => {
-    postMantra();
-    getMantras();
+    postDiaryEntry();
+    getDiaryEntries();
   };
-
-  console.log(diaryData)
 
   return (
     <View style={styles.container}>
@@ -54,18 +52,18 @@ const DiaryScreen = () => {
       >
         <View>
           <TextInput
-            label="Enter a new Mantra..."
+            label="Enter a new Diary entry..."
             value={formInput}
             onChangeText={(formInput) => setFormInput(formInput)}
           />
           <Button onPress={handleSubmit}>Submit</Button>
         </View>
         <View>
-          {mantras.map((mantra) => {
+          {diaryEntries.map((diaryEntry) => {
             return (
-              <Card key={mantra.mantra_id} style={styles.mantraContainer}>
+              <Card key={diaryEntry.entry_id} style={styles.diaryContainer}>
                 <Card.Content>
-                  <Title children={mantra.mantra} />
+                  <Title children={diaryEntry.entry} />
                 </Card.Content>
               </Card>
             );
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginLeft: -10,
   },
-  mantraContainer: {
+  diaryContainer: {
     alignItems: 'center',
     marginHorizontal: 0,
   },
