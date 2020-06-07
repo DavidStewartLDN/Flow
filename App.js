@@ -3,12 +3,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 // import * as React from 'react';
 // import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
-// import useCachedResources from './hooks/useCachedResources';
+import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 
 import React from 'react';
 import {
+  Platform,
   StyleSheet,
   Text,
   StatusBar,
@@ -23,17 +24,15 @@ Amplify.configure(config)
 
 const Stack = createStackNavigator();
 
-// export default function App(props) {
-//   const isLoadingComplete = useCachedResources();
+
+function App(props) {
+  const isLoadingComplete = useCachedResources();
 
 
-//   if (!isLoadingComplete) {
-//     return null;
-//   } else {
-//     return (
-class App extends React.Component {
-  render() {
-    return(
+  if (!isLoadingComplete) {
+    return null;
+  } else {
+    return (
     <View style={styles.container}>
       {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
       <NavigationContainer linking={LinkingConfiguration}>
@@ -49,6 +48,7 @@ class App extends React.Component {
 //   }
 // }
 
+export default withAuthenticator(App, { includeGreetings: true })
 // class App extends React.Component {
 //   render() {
 //     return ( 
@@ -64,7 +64,6 @@ class App extends React.Component {
 //   }
 // }
 
-export default withAuthenticator(App, { includeGreetings: true })
 
 const styles = StyleSheet.create({
   container: {
