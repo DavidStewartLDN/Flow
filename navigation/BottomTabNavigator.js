@@ -30,7 +30,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Diary"
         component={DiaryScreen}
         options={{
-          title: 'Mantras',
+          title: 'Diary',
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-happy" />
           ),
