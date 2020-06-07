@@ -1,0 +1,10 @@
+{
+	"auth": {
+		"flow9523c21e": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}

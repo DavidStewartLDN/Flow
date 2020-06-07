@@ -18,7 +18,7 @@ const DiaryScreen = () => {
 
   const getDiaryEntries = () => {
     axios
-      .get('http://localhost:5000/diary_entries')
+      .get('http://192.168.1.102:5000/diary_entries')
       .then((response) => setDiaryEntries(response.data))
       .catch((error) => {
         console.error(error);
@@ -31,7 +31,7 @@ const DiaryScreen = () => {
 
   const postDiaryEntry = () => {
     axios
-      .post('http://localhost:5000/diary_entries/1', {
+      .post('http://192.168.1.102:5000/diary_entries/1', {
         entry: formInput,
       })
       .catch((error) => {
