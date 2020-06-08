@@ -15,10 +15,9 @@
                 "authConfig": {
                     "additionalAuthenticationProviders": [],
                     "defaultAuthentication": {
-                        "authenticationType": "API_KEY",
-                        "apiKeyConfig": {
-                            "description": "flow",
-                            "apiKeyExpirationDays": 7
+                        "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+                        "userPoolConfig": {
+                            "userPoolId": "authflow9523c21e"
                         }
                     }
                 }
