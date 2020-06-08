@@ -14,19 +14,22 @@ const listDiaryEntrys = `
         id
         title
         body
+        score
       }
     }
  }
 `
 const createDiaryEntry = `
-  mutation($title: String!, $body: String) {
+  mutation($title: String!, $body: String, $score: Int!) {
     createDiaryEntry(input: {
       title: $title
       body: $body
+      score: $score
   }) {
     id
     title
     body
+    score
   }
 }`
 
@@ -34,6 +37,7 @@ class App extends React.Component {
   state = {
     title: "",
     body: "",
+    score: "",
     DiaryEntrys: [],
   };
   async componentDidMount() {
@@ -60,6 +64,7 @@ class App extends React.Component {
       DiaryEntrys,
       title: "",
       body: "",
+      score: "",
     });
     try {
       await API.graphql(graphqlOperation(createDiaryEntry, DiaryEntry));
@@ -83,12 +88,20 @@ class App extends React.Component {
           placeholder="Entry Body"
           value={this.state.body}
         />
+        <TextInput
+          style={styles.input}
+          keyboardType='numeric'
+          onChangeText={val => this.onChangeText("score", val)}
+          placeholder="Entry Score"
+          value={this.state.score}
+        />
         <Button onPress={this.createDiaryEntry} title="Add Entry" />
         {
           this.state.DiaryEntrys.map((DiaryEntry, index) => (
             <View key={index} style={styles.item}>
               <Text style={styles.title}>{DiaryEntry.title}</Text>
               <Text style={styles.body}>{DiaryEntry.body}</Text>
+              <Text style={styles.score}>{DiaryEntry.score}</Text>
             </View>
           ))
         }
