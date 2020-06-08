@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, Slider, ScrollView } from "react-native";
+import moment from "moment";
 
 import Amplify from "@aws-amplify/core";
 import config from "../aws-exports";
@@ -15,6 +16,7 @@ const listDiaryEntrys = `
         title
         body
         score
+        createdAt
       }
     }
  }
@@ -37,8 +39,8 @@ class App extends React.Component {
   state = {
     title: "",
     body: "",
-    score: "",
-    DiaryEntrys: [],
+    score: 0,
+    DiaryEntrys: []
   };
   async componentDidMount() {
     try {
@@ -56,6 +58,14 @@ class App extends React.Component {
       [key]: val,
     });
   };
+
+  change(score) {
+    this.setState(() => {
+      return {
+        score: parseFloat(score)
+      };
+    });
+  }
   createDiaryEntry = async () => {
     const DiaryEntry = this.state;
     if (DiaryEntry.name === "" || DiaryEntry.description === "") return;
@@ -74,8 +84,17 @@ class App extends React.Component {
     }
   };
   render() {
+    // const { value } = this.state;
     return (
+      
       <View style={styles.container}>
+        <Text style={styles.text}>{String(this.state.score)}</Text>
+        <Slider
+          step={1}
+          maximumValue={10}
+          onValueChange={this.change.bind(this)}
+          value={this.state.score}
+        />
         <TextInput
           style={styles.input}
           onChangeText={val => this.onChangeText("title", val)}
@@ -88,24 +107,22 @@ class App extends React.Component {
           placeholder="Entry Body"
           value={this.state.body}
         />
-        <TextInput
-          style={styles.input}
-          keyboardType='numeric'
-          onChangeText={val => this.onChangeText("score", val)}
-          placeholder="Entry Score"
-          value={this.state.score}
-        />
+        
         <Button onPress={this.createDiaryEntry} title="Add Entry" />
+        <ScrollView style={styles.scrollView}>
         {
           this.state.DiaryEntrys.map((DiaryEntry, index) => (
             <View key={index} style={styles.item}>
+              <Text style={styles.title}>{moment(DiaryEntry.createdAt).format('ddd MMMM Do')}</Text>
               <Text style={styles.title}>{DiaryEntry.title}</Text>
               <Text style={styles.body}>{DiaryEntry.body}</Text>
               <Text style={styles.score}>{DiaryEntry.score}</Text>
             </View>
           ))
         }
+        </ScrollView>
       </View>
+      
     );
   }
 }
