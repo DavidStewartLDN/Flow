@@ -1,171 +1,126 @@
-import { Ionicons } from '@expo/vector-icons';
-import * as WebBrowser from 'expo-web-browser';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { Button, Card, Title, TextInput } from 'react-native-paper';
+import React from "react";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
-import {
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import Amplify from "@aws-amplify/core";
+import config from "../aws-exports";
+Amplify.configure(config);
 
-import { ScrollView } from 'react-native-gesture-handler';
+import API, { graphqlOperation } from "@aws-amplify/api";
 
-const DiaryScreen = () => {
-  const [diaryEntries, setDiaryEntries] = useState([]);
-  const [formInput, setFormInput] = useState('');
+const listDiaryEntrys = `
+  query {
+    listDiaryEntrys {
+      items {
+        id
+        title
+        body
+      }
+    }
+ }
+`
+const createDiaryEntry = `
+  mutation($title: String!, $body: String) {
+    createDiaryEntry(input: {
+      title: $title
+      body: $body
+  }) {
+    id
+    title
+    body
+  }
+}`
 
-  const getDiaryEntries = () => {
-    axios
-      .get('http://localhost:5000/diary_entries')
-      .then((response) => setDiaryEntries(response.data))
-      .catch((error) => {
-        console.error(error);
+class App extends React.Component {
+  state = {
+    title: "",
+    body: "",
+    DiaryEntrys: [],
+  };
+  async componentDidMount() {
+    try {
+      const graphqldata = await API.graphql(graphqlOperation(listDiaryEntrys));
+      console.log("graphqldata:", graphqldata);
+      this.setState({
+        DiaryEntrys: graphqldata.data.listDiaryEntrys.items,
       });
+    } catch (err) {
+      console.log("error: ", err);
+    }
+  }
+  onChangeText = (key, val) => {
+    this.setState({
+      [key]: val,
+    });
   };
-
-  useEffect(() => {
-    getDiaryEntries();
-  }, []);
-
-  const postDiaryEntry = () => {
-    axios
-      .post('http://localhost:5000/diary_entries/1', {
-        entry: formInput,
-      })
-      .catch((error) => {
-        alert('Please try again later');
-        console.error(error);
-      });
+  createDiaryEntry = async () => {
+    const DiaryEntry = this.state;
+    if (DiaryEntry.name === "" || DiaryEntry.description === "") return;
+    const DiaryEntrys = [...this.state.DiaryEntrys, DiaryEntry];
+    this.setState({
+      DiaryEntrys,
+      title: "",
+      body: "",
+    });
+    try {
+      await API.graphql(graphqlOperation(createDiaryEntry, DiaryEntry));
+      console.log("Diary Entry successfully created.");
+    } catch (err) {
+      console.log("error creating Diary Entry...", err);
+    }
   };
+  render() {
+    return (
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          onChangeText={val => this.onChangeText("title", val)}
+          placeholder="Entry Title"
+          value={this.state.title}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={val => this.onChangeText("body", val)}
+          placeholder="Entry Body"
+          value={this.state.body}
+        />
+        <Button onPress={this.createDiaryEntry} title="Add Entry" />
+        {
+          this.state.DiaryEntrys.map((DiaryEntry, index) => (
+            <View key={index} style={styles.item}>
+              <Text style={styles.title}>{DiaryEntry.title}</Text>
+              <Text style={styles.body}>{DiaryEntry.body}</Text>
+            </View>
+          ))
+        }
+      </View>
+    );
+  }
+}
 
-  const handleSubmit = () => {
-    postDiaryEntry();
-    getDiaryEntries();
-  };
-
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.flatList}
-      >
-        <View>
-          <TextInput
-            label="Enter a new Diary entry..."
-            value={formInput}
-            onChangeText={(formInput) => setFormInput(formInput)}
-          />
-          <Button onPress={handleSubmit}>Submit</Button>
-        </View>
-        <View>
-          {diaryEntries.map((diaryEntry) => {
-            return (
-              <Card key={diaryEntry.entry_id} style={styles.diaryContainer}>
-                <Card.Content>
-                  <Title children={diaryEntry.entry} />
-                </Card.Content>
-              </Card>
-            );
-          })}
-        </View>
-      </ScrollView>
-    </View>
-  );
-};
+export default App
 
 const styles = StyleSheet.create({
+  input: {
+    height: 45,
+    borderBottomWidth: 2,
+    borderBottomColor: "black",
+    marginVertical: 10,
+  },
+  item: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+    paddingVertical: 10,
+  },
+  name: {
+    fontSize: 16,
+  },
+  description: {
+    color: "rgba(0, 0, 0, .5)",
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  card: {
-    marginHorizontal: 20,
-    height: 20,
-    justifyContent: 'center',
-    padding: 5,
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  diaryContainer: {
-    alignItems: 'center',
-    marginHorizontal: 0,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
+    backgroundColor: "#fff",
+    paddingHorizontal: 10,
+    paddingTop: 50,
   },
 });
-export default DiaryScreen;
