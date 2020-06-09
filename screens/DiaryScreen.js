@@ -169,9 +169,8 @@ const styles = StyleSheet.create({
   diaryEntry: {
     width: '85%',
   },
-
   body: {
-    
+    fontStyle: 'italic',
   },
   score: {
     width: '15%',
