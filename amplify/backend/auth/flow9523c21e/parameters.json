@@ -1,6 +1,6 @@
 {
     "identityPoolName": "flow9523c21e_identitypool_9523c21e",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "flow9523c21e",
     "userPoolName": "flow9523c21e_userpool_9523c21e",
     "autoVerifiedAttributes": [
