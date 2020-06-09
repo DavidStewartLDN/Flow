@@ -114,10 +114,14 @@ class App extends React.Component {
         {
           this.state.DiaryEntrys.map((DiaryEntry, index) => (
             <View key={index} style={styles.item}>
-              <Text style={styles.title}>{moment(DiaryEntry.createdAt).format('ddd MMMM Do')}</Text>
-              <Text style={styles.title}>{DiaryEntry.title}</Text>
-              <Text style={styles.body}>{DiaryEntry.body}</Text>
-              <Text style={styles.score}>{DiaryEntry.score}</Text>
+              <View style={styles.diaryEntry}>
+                <Text style={styles.title}>{moment(DiaryEntry.createdAt).format('ddd MMMM Do')}</Text>
+                <Text style={styles.title}>{DiaryEntry.title}</Text>
+                <Text style={styles.body}>{DiaryEntry.body}</Text>
+              </View>
+              <View style={styles.score}>
+                <Text>{DiaryEntry.score}</Text>
+              </View>
             </View>
           ))
         }
@@ -141,6 +145,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
     paddingVertical: 10,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start'
   },
   name: {
     fontSize: 16,
@@ -157,5 +165,17 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 16
+  },
+  diaryEntry: {
+    width: '85%',
+  },
+
+  body: {
+    
+  },
+  score: {
+    width: '15%',
+    fontSize: 30,
+    alignItems: "stretch",
   },
 });
