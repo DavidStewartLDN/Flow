@@ -154,4 +154,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 50,
   },
+  title: {
+    fontWeight: "bold",
+    fontSize: 16
+  },
 });
