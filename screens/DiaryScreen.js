@@ -88,6 +88,7 @@ class App extends React.Component {
     return (
       
       <View style={styles.container}>
+        <Text style={styles.text}>How would you rate your day out of 10?</Text>
         <Text style={styles.text}>{String(this.state.score)}</Text>
         <Slider
           step={1}
