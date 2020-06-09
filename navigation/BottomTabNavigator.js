@@ -32,7 +32,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         options={{
           title: 'Diary',
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name="md-happy" />
+            <TabBarIcon focused={focused} name="md-book" />
           ),
         }}
       />
