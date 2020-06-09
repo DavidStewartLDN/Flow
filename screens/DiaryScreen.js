@@ -120,7 +120,7 @@ class App extends React.Component {
                 <Text style={styles.body}>{DiaryEntry.body}</Text>
               </View>
               <View style={styles.score}>
-                <Text>{DiaryEntry.score}</Text>
+                <Text adjustsFontSizeToFit style={styles.scoreText}>{DiaryEntry.score}</Text>
               </View>
             </View>
           ))
@@ -175,7 +175,9 @@ const styles = StyleSheet.create({
   },
   score: {
     width: '15%',
-    fontSize: 30,
-    alignItems: "stretch",
+  },
+  scoreText: {
+    fontSize: 50,
+    textAlign: 'center',
   },
 });
