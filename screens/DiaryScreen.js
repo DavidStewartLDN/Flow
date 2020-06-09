@@ -88,14 +88,20 @@ class App extends React.Component {
     return (
       
       <View style={styles.container}>
-        <Text style={styles.text}>How would you rate your day out of 10?</Text>
-        <Text style={styles.text}>{String(this.state.score)}</Text>
-        <Slider
-          step={1}
-          maximumValue={10}
-          onValueChange={this.change.bind(this)}
-          value={this.state.score}
-        />
+        <Text style={styles.question}>How would you rate your day out of 10?</Text>
+        <View style={styles.splitFlex}>
+          <View style={styles.leftFlex}>
+            <Slider
+              step={1}
+              maximumValue={10}
+              onValueChange={this.change.bind(this)}
+              value={this.state.score}
+            />
+          </View>
+          <View style={styles.rightFlex}>
+            <Text style={styles.ratingText}>{String(this.state.score)}</Text>
+          </View>
+        </View>
         <TextInput
           style={styles.input}
           onChangeText={val => this.onChangeText("title", val)}
@@ -114,12 +120,12 @@ class App extends React.Component {
         {
           this.state.DiaryEntrys.map((DiaryEntry, index) => (
             <View key={index} style={styles.item}>
-              <View style={styles.diaryEntry}>
-                <Text style={styles.title}>{moment(DiaryEntry.createdAt).format('ddd MMMM Do')}</Text>
+              <View style={styles.leftFlex}>
+                <Text style={styles.date}>{moment(DiaryEntry.createdAt).format('ddd MMMM Do')}</Text>
                 <Text style={styles.title}>{DiaryEntry.title}</Text>
                 <Text style={styles.body}>{DiaryEntry.body}</Text>
               </View>
-              <View style={styles.score}>
+              <View style={styles.rightFlex}>
                 <Text adjustsFontSizeToFit style={styles.scoreText}>{DiaryEntry.score}</Text>
               </View>
             </View>
@@ -166,17 +172,35 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16
   },
-  diaryEntry: {
+  date: {
+    fontWeight: "bold",
+    fontSize: 20
+  },
+  splitFlex: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+  },
+  leftFlex: {
     width: '85%',
+  },
+  rightFlex: {
+    width: '15%',
   },
   body: {
     fontStyle: 'italic',
   },
-  score: {
-    width: '15%',
-  },
   scoreText: {
     fontSize: 50,
     textAlign: 'center',
+  },
+  ratingText: {
+    fontSize: 36,
+    textAlign: 'center',
+  },
+  question: {
+    textAlign: 'center',
+    fontSize: 20,
   },
 });
