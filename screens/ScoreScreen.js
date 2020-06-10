@@ -21,19 +21,6 @@ const listDiaryEntrys = `
     }
  }
 `
-const createDiaryEntry = `
-  mutation($title: String!, $body: String, $score: Int!) {
-    createDiaryEntry(input: {
-      title: $title
-      body: $body
-      score: $score
-  }) {
-    id
-    title
-    body
-    score
-  }
-}`
 
 class App extends React.Component {
   state = {
@@ -66,57 +53,12 @@ class App extends React.Component {
       };
     });
   }
-  createDiaryEntry = async () => {
-    const DiaryEntry = this.state;
-    if (DiaryEntry.name === "" || DiaryEntry.description === "") return;
-    const DiaryEntrys = [...this.state.DiaryEntrys, DiaryEntry];
-    this.setState({
-      DiaryEntrys,
-      title: "",
-      body: "",
-      score: "0",
-    });
-    try {
-      await API.graphql(graphqlOperation(createDiaryEntry, DiaryEntry));
-      console.log("Diary Entry successfully created.");
-    } catch (err) {
-      console.log("error creating Diary Entry...", err);
-    }
-  };
   render() {
     // const { value } = this.state;
     return (
       
       <View style={styles.container}>
         <ScrollView>
-        <Text style={styles.question}>How would you rate your day out of 10?</Text>
-        <View style={styles.splitFlex}>
-          <View style={styles.leftFlex}>
-            <Slider
-              step={1}
-              maximumValue={10}
-              onValueChange={this.change.bind(this)}
-              value={this.state.score}
-            />
-          </View>
-          <View style={styles.rightFlex}>
-            <Text style={styles.ratingText}>{String(this.state.score)}</Text>
-          </View>
-        </View>
-        <TextInput
-          style={styles.input}
-          onChangeText={val => this.onChangeText("title", val)}
-          placeholder="Entry Title"
-          value={this.state.title}
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={val => this.onChangeText("body", val)}
-          placeholder="Entry Body"
-          value={this.state.body}
-        />
-        
-        <Button onPress={this.createDiaryEntry} title="Add Entry" />
         {
           this.state.DiaryEntrys.map((DiaryEntry, index) => (
             <View key={index} style={styles.item}>
