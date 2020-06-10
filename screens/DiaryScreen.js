@@ -74,7 +74,7 @@ class App extends React.Component {
       DiaryEntrys,
       title: "",
       body: "",
-      score: "",
+      score: "0",
     });
     try {
       await API.graphql(graphqlOperation(createDiaryEntry, DiaryEntry));
@@ -88,14 +88,21 @@ class App extends React.Component {
     return (
       
       <View style={styles.container}>
-        <Text style={styles.text}>How would you rate your day out of 10?</Text>
-        <Text style={styles.text}>{String(this.state.score)}</Text>
-        <Slider
-          step={1}
-          maximumValue={10}
-          onValueChange={this.change.bind(this)}
-          value={this.state.score}
-        />
+        <ScrollView>
+        <Text style={styles.question}>How would you rate your day out of 10?</Text>
+        <View style={styles.splitFlex}>
+          <View style={styles.leftFlex}>
+            <Slider
+              step={1}
+              maximumValue={10}
+              onValueChange={this.change.bind(this)}
+              value={this.state.score}
+            />
+          </View>
+          <View style={styles.rightFlex}>
+            <Text style={styles.ratingText}>{String(this.state.score)}</Text>
+          </View>
+        </View>
         <TextInput
           style={styles.input}
           onChangeText={val => this.onChangeText("title", val)}
@@ -110,14 +117,17 @@ class App extends React.Component {
         />
         
         <Button onPress={this.createDiaryEntry} title="Add Entry" />
-        <ScrollView style={styles.scrollView}>
         {
           this.state.DiaryEntrys.map((DiaryEntry, index) => (
             <View key={index} style={styles.item}>
-              <Text style={styles.title}>{moment(DiaryEntry.createdAt).format('ddd MMMM Do')}</Text>
-              <Text style={styles.title}>{DiaryEntry.title}</Text>
-              <Text style={styles.body}>{DiaryEntry.body}</Text>
-              <Text style={styles.score}>{DiaryEntry.score}</Text>
+              <View style={styles.leftFlex}>
+                <Text style={styles.date}>{moment(DiaryEntry.createdAt).format('ddd MMMM Do')}</Text>
+                <Text style={styles.title}>{DiaryEntry.title}</Text>
+                <Text style={styles.body}>{DiaryEntry.body}</Text>
+              </View>
+              <View style={styles.rightFlex}>
+                <Text adjustsFontSizeToFit style={styles.scoreText}>{DiaryEntry.score}</Text>
+              </View>
             </View>
           ))
         }
@@ -141,6 +151,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
     paddingVertical: 10,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start'
   },
   name: {
     fontSize: 16,
@@ -153,5 +167,39 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 10,
     paddingTop: 50,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 16
+  },
+  date: {
+    fontWeight: "bold",
+    fontSize: 20
+  },
+  splitFlex: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+  },
+  leftFlex: {
+    width: '85%',
+  },
+  rightFlex: {
+    width: '15%',
+  },
+  body: {
+    fontStyle: 'italic',
+  },
+  scoreText: {
+    fontSize: 50,
+    textAlign: 'center',
+  },
+  ratingText: {
+    fontSize: 36,
+    textAlign: 'center',
+  },
+  question: {
+    textAlign: 'center',
+    fontSize: 20,
   },
 });
