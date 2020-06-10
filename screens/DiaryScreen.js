@@ -74,7 +74,7 @@ class App extends React.Component {
       DiaryEntrys,
       title: "",
       body: "",
-      score: "",
+      score: "0",
     });
     try {
       await API.graphql(graphqlOperation(createDiaryEntry, DiaryEntry));
@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   splitFlex: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
