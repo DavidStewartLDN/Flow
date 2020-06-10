@@ -88,6 +88,7 @@ class App extends React.Component {
     return (
       
       <View style={styles.container}>
+        <ScrollView>
         <Text style={styles.question}>How would you rate your day out of 10?</Text>
         <View style={styles.splitFlex}>
           <View style={styles.leftFlex}>
@@ -116,7 +117,6 @@ class App extends React.Component {
         />
         
         <Button onPress={this.createDiaryEntry} title="Add Entry" />
-        <ScrollView style={styles.scrollView}>
         {
           this.state.DiaryEntrys.map((DiaryEntry, index) => (
             <View key={index} style={styles.item}>
