@@ -37,11 +37,21 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
+        name="Scores"
+        component={DiaryScreen}
+        options={{
+          title: 'Scores',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-stats" />
+          ),
+        }}
+      />
+      <BottomTab.Screen
         name="Links"
         component={LinksScreen}
         options={{
           title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
         }}
       />
     </BottomTab.Navigator>
@@ -56,6 +66,8 @@ function getHeaderTitle(route) {
       return 'How to get started';
     case 'Diary':
       return 'Start your diary here';
+    case 'Scores':
+      return 'Score history';
     case 'Links':
       return 'Links to learn more';
   }

@@ -126,7 +126,7 @@ class App extends React.Component {
                 <Text style={styles.body}>{DiaryEntry.body}</Text>
               </View>
               <View style={styles.rightFlex}>
-                <Text adjustsFontSizeToFit style={styles.scoreText}>{DiaryEntry.score}</Text>
+                <Text style={styles.scoreText}>{DiaryEntry.score}</Text>
               </View>
             </View>
           ))
