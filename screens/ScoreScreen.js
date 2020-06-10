@@ -27,7 +27,8 @@ const listDiaryEntrys = `
 
 class App extends React.Component {
   state = {
-    DiaryEntrys: []
+    DiaryEntrys: [],
+    data: [0]
   };
   async componentDidMount() {
     try {
@@ -35,62 +36,55 @@ class App extends React.Component {
       console.log("graphqldata:", graphqldata);
       this.setState({
         DiaryEntrys: graphqldata.data.listDiaryEntrys.items,
+        data: graphqldata.data.listDiaryEntrys.items.map(entry => entry.score),
+        // data: DiaryEntrys.map(entry => entry.score)
       });
     } catch (err) {
       console.log("error: ", err);
     }
   }
   render() {
+    console.log(this.state.data)
     // const { value } = this.state;
     return (
       
       <View style={styles.container}>
-        <View>
-  <Text>Bezier Line Chart</Text>
-  <LineChart
-    data={{
-      labels: ["January", "February", "March", "April", "May", "June"],
-      datasets: [
-        {
-          data: [
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100
-          ]
-        }
-      ]
-    }}
-    width={Dimensions.get("window").width} // from react-native
-    height={220}
-    yAxisLabel="$"
-    yAxisSuffix="k"
-    yAxisInterval={1} // optional, defaults to 1
-    chartConfig={{
-      backgroundColor: "#e26a00",
-      backgroundGradientFrom: "#fb8c00",
-      backgroundGradientTo: "#ffa726",
-      decimalPlaces: 2, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      style: {
-        borderRadius: 16
-      },
-      propsForDots: {
-        r: "6",
-        strokeWidth: "2",
-        stroke: "#ffa726"
-      }
-    }}
-    bezier
-    style={{
-      marginVertical: 8,
-      borderRadius: 16
-    }}
-  />
-</View>
+        {/* <View> */}
+          {/* <Text>Scores</Text> */}
+        <LineChart
+          data={{
+            datasets: [
+              {
+                data: this.state.data
+              }
+            ]
+          }}
+          width={Dimensions.get("window").width-8} // from react-native
+          height={220}
+          yAxisSuffix=""
+          yAxisInterval={1} // optional, defaults to 1
+          chartConfig={{
+            backgroundColor: "#e26a00",
+            backgroundGradientFrom: "#fb8c00",
+            backgroundGradientTo: "#ffa726",
+            decimalPlaces: 0, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 10
+            },
+            propsForDots: {
+              r: "6",
+              strokeWidth: "2",
+              stroke: "#ffa726"
+            }
+          }}
+          bezier
+          style={{
+            borderRadius: 8
+          }}
+        />
+        {/* </View> */}
         <ScrollView>
         {
           this.state.DiaryEntrys.map((DiaryEntry, index) => (
@@ -140,8 +134,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 10,
-    paddingTop: 50,
+    paddingHorizontal: 4,
+    paddingTop: 40,
   },
   title: {
     fontWeight: "bold",

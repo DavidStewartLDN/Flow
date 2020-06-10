@@ -10,7 +10,9 @@ import API, { graphqlOperation } from "@aws-amplify/api";
 
 const listDiaryEntrys = `
   query {
-    listDiaryEntrys {
+    entriesByCreation(
+      sortDirection: DESC,
+      ) {
       items {
         id
         title
@@ -20,7 +22,8 @@ const listDiaryEntrys = `
       }
     }
  }
-`
+`;
+
 const createDiaryEntry = `
   mutation($title: String!, $body: String, $score: Int!) {
     createDiaryEntry(input: {
