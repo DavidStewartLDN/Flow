@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Button, Slider, ScrollView } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, Slider, ScrollView, Dimensions } from "react-native";
 import moment from "moment";
 
 import Amplify from "@aws-amplify/core";
@@ -7,6 +7,9 @@ import config from "../aws-exports";
 Amplify.configure(config);
 
 import API, { graphqlOperation } from "@aws-amplify/api";
+import {
+  LineChart,
+} from "react-native-chart-kit";
 
 const listDiaryEntrys = `
   query {
@@ -24,9 +27,6 @@ const listDiaryEntrys = `
 
 class App extends React.Component {
   state = {
-    title: "",
-    body: "",
-    score: 0,
     DiaryEntrys: []
   };
   async componentDidMount() {
@@ -40,24 +40,57 @@ class App extends React.Component {
       console.log("error: ", err);
     }
   }
-  onChangeText = (key, val) => {
-    this.setState({
-      [key]: val,
-    });
-  };
-
-  change(score) {
-    this.setState(() => {
-      return {
-        score: parseFloat(score)
-      };
-    });
-  }
   render() {
     // const { value } = this.state;
     return (
       
       <View style={styles.container}>
+        <View>
+  <Text>Bezier Line Chart</Text>
+  <LineChart
+    data={{
+      labels: ["January", "February", "March", "April", "May", "June"],
+      datasets: [
+        {
+          data: [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100
+          ]
+        }
+      ]
+    }}
+    width={Dimensions.get("window").width} // from react-native
+    height={220}
+    yAxisLabel="$"
+    yAxisSuffix="k"
+    yAxisInterval={1} // optional, defaults to 1
+    chartConfig={{
+      backgroundColor: "#e26a00",
+      backgroundGradientFrom: "#fb8c00",
+      backgroundGradientTo: "#ffa726",
+      decimalPlaces: 2, // optional, defaults to 2dp
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      style: {
+        borderRadius: 16
+      },
+      propsForDots: {
+        r: "6",
+        strokeWidth: "2",
+        stroke: "#ffa726"
+      }
+    }}
+    bezier
+    style={{
+      marginVertical: 8,
+      borderRadius: 16
+    }}
+  />
+</View>
         <ScrollView>
         {
           this.state.DiaryEntrys.map((DiaryEntry, index) => (
