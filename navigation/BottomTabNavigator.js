@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import DiaryScreen from '../screens/DiaryScreen';
+import ScoreScreen from '../screens/ScoreScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -37,11 +38,21 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
+        name="Scores"
+        component={ScoreScreen}
+        options={{
+          title: 'Scores',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-stats" />
+          ),
+        }}
+      />
+      <BottomTab.Screen
         name="Links"
         component={LinksScreen}
         options={{
           title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
         }}
       />
     </BottomTab.Navigator>
@@ -56,6 +67,8 @@ function getHeaderTitle(route) {
       return 'How to get started';
     case 'Diary':
       return 'Start your diary here';
+    case 'Scores':
+      return 'Score history';
     case 'Links':
       return 'Links to learn more';
   }

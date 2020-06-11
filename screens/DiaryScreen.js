@@ -9,8 +9,8 @@ Amplify.configure(config);
 import API, { graphqlOperation } from "@aws-amplify/api";
 
 const listDiaryEntrys = `
-  query {
-    listDiaryEntrys {
+  query GetByCreatedAt {
+    getDiaryEntrysByCreatedAt(type: "Set", sortDirection: DESC) {
       items {
         id
         title
@@ -25,6 +25,7 @@ const createDiaryEntry = `
   mutation($title: String!, $body: String, $score: Int!) {
     createDiaryEntry(input: {
       title: $title
+      type: "Set"
       body: $body
       score: $score
   }) {
@@ -47,7 +48,7 @@ class App extends React.Component {
       const graphqldata = await API.graphql(graphqlOperation(listDiaryEntrys));
       console.log("graphqldata:", graphqldata);
       this.setState({
-        DiaryEntrys: graphqldata.data.listDiaryEntrys.items,
+        DiaryEntrys: graphqldata.data.getDiaryEntrysByCreatedAt.items,
       });
     } catch (err) {
       console.log("error: ", err);
@@ -69,7 +70,7 @@ class App extends React.Component {
   createDiaryEntry = async () => {
     const DiaryEntry = this.state;
     if (DiaryEntry.name === "" || DiaryEntry.description === "") return;
-    const DiaryEntrys = [...this.state.DiaryEntrys, DiaryEntry];
+    const DiaryEntrys = [ DiaryEntry,...this.state.DiaryEntrys];
     this.setState({
       DiaryEntrys,
       title: "",
@@ -203,3 +204,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
