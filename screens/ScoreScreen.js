@@ -12,8 +12,8 @@ import {
 } from "react-native-chart-kit";
 
 const listDiaryEntrys = `
-  query {
-    listDiaryEntrys {
+  query GetByCreatedAt {
+    getDiaryEntrysByCreatedAt(type: "Set", sortDirection: DESC) {
       items {
         id
         title
@@ -23,7 +23,7 @@ const listDiaryEntrys = `
       }
     }
  }
-`
+ `
 
 class App extends React.Component {
   state = {
@@ -35,8 +35,8 @@ class App extends React.Component {
       const graphqldata = await API.graphql(graphqlOperation(listDiaryEntrys));
       console.log("graphqldata:", graphqldata);
       this.setState({
-        DiaryEntrys: graphqldata.data.listDiaryEntrys.items,
-        data: graphqldata.data.listDiaryEntrys.items.map(entry => entry.score),
+        DiaryEntrys: graphqldata.data.getDiaryEntrysByCreatedAt.items,
+        data: graphqldata.data.getDiaryEntrysByCreatedAt.items.map(entry => entry.score),
         // data: DiaryEntrys.map(entry => entry.score)
       });
     } catch (err) {
@@ -55,7 +55,7 @@ class App extends React.Component {
           data={{
             datasets: [
               {
-                data: this.state.data
+                data: this.state.data.reverse()
               }
             ]
           }}
