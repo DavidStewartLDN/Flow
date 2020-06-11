@@ -10,9 +10,7 @@ import API, { graphqlOperation } from "@aws-amplify/api";
 
 const listDiaryEntrys = `
   query {
-    entriesByCreation(
-      sortDirection: DESC,
-      ) {
+    listDiaryEntrys {
       items {
         id
         title
@@ -22,8 +20,7 @@ const listDiaryEntrys = `
       }
     }
  }
-`;
-
+`
 const createDiaryEntry = `
   mutation($title: String!, $body: String, $score: Int!) {
     createDiaryEntry(input: {
@@ -129,7 +126,7 @@ class App extends React.Component {
                 <Text style={styles.body}>{DiaryEntry.body}</Text>
               </View>
               <View style={styles.rightFlex}>
-                <Text style={styles.scoreText}>{DiaryEntry.score}</Text>
+                <Text adjustsFontSizeToFit style={styles.scoreText}>{DiaryEntry.score}</Text>
               </View>
             </View>
           ))
@@ -206,3 +203,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+

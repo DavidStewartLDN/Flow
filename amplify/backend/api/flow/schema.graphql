@@ -1,15 +1,6 @@
-type DiaryEntry
-  @model
-  @auth(rules: [{ allow: owner }]) 
-  @key(
-    name: "ByCreation"
-    fields: ["type", "createdAt"]
-    queryField: "entriesByCreation"
-  ) {
+type DiaryEntry @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   title: String!
   body: String
   score: Int!
-  createdAt: AWSDateTime
-  type: String!
 }
