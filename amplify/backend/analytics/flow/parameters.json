@@ -1,0 +1,21 @@
+{
+    "appName": "flow",
+    "roleName": "pinpointLambdaRoled64f195b",
+    "cloudformationPolicyName": "cloudformationPolicyd64f195b",
+    "cloudWatchPolicyName": "cloudWatchPolicyd64f195b",
+    "pinpointPolicyName": "pinpointPolicyd64f195b",
+    "authPolicyName": "pinpoint_amplify_d64f195b",
+    "unauthPolicyName": "pinpoint_amplify_d64f195b",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
