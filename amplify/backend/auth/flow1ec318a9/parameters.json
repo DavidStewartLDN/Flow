@@ -1,6 +1,6 @@
 {
     "identityPoolName": "flow1ec318a9_identitypool_1ec318a9",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "flow1ec318a9",
     "userPoolName": "flow1ec318a9_userpool_1ec318a9",
     "autoVerifiedAttributes": [
