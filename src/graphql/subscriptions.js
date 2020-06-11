@@ -8,6 +8,7 @@ export const onCreateDiaryEntry = /* GraphQL */ `
       title
       body
       score
+      type
       createdAt
       updatedAt
       owner
@@ -21,6 +22,7 @@ export const onUpdateDiaryEntry = /* GraphQL */ `
       title
       body
       score
+      type
       createdAt
       updatedAt
       owner
@@ -34,6 +36,7 @@ export const onDeleteDiaryEntry = /* GraphQL */ `
       title
       body
       score
+      type
       createdAt
       updatedAt
       owner

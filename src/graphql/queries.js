@@ -8,6 +8,7 @@ export const getDiaryEntry = /* GraphQL */ `
       title
       body
       score
+      type
       createdAt
       updatedAt
       owner
@@ -26,6 +27,38 @@ export const listDiaryEntrys = /* GraphQL */ `
         title
         body
         score
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getDiaryEntrysByCreatedAt = /* GraphQL */ `
+  query GetDiaryEntrysByCreatedAt(
+    $type: String
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelDiaryEntryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getDiaryEntrysByCreatedAt(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        body
+        score
+        type
         createdAt
         updatedAt
         owner
