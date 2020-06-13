@@ -43,7 +43,15 @@ class App extends React.Component {
       console.log("error: ", err);
     }
   }
+
+  chooseData(){
+    if (this.state.data.length === 0){
+      this.state.data = [0]
+    }
+  }
+
   render() {
+    this.chooseData();
     console.log(this.state.data)
     // const { value } = this.state;
     return (
@@ -58,7 +66,9 @@ class App extends React.Component {
                 data: this.state.data.reverse()
               }
             ]
-          }}
+          }
+          }
+      
           width={Dimensions.get("window").width-8} // from react-native
           height={220}
           yAxisSuffix=""
