@@ -1,207 +1,168 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Button, Slider, ScrollView } from "react-native";
-import moment from "moment";
+import { StyleSheet, View, ScrollView } from "react-native";
+import ChatBot from 'react-native-chatbot-expo';
 
-import Amplify from "@aws-amplify/core";
-import config from "../aws-exports";
-Amplify.configure(config);
+function ChatScreen(){
 
-import API, { graphqlOperation } from "@aws-amplify/api";
+  const steps = [
+    {
+      id: 'welcome',
+      message: "Hello, how's it going today?",
+      trigger: 'question',
+    },
+    {
+      id: 'question',
+      message: "Would you say you've had a good day today?",
+      trigger: 'questionOptions',
+    },
+    {
+      id: 'questionOptions',
+      options: [
+        { value: 1, label: 'Yes', trigger: 'happy' },
+        { value: 2, label: 'It could have been better', trigger: 'unhappy' },
+      ],
+    },
+    {
+      id: 'happy',
+      message: 'Thats great would you like some self help tips?',
+      trigger: 'happy-options',
+    },
+    {
+      id: 'happy-options',
 
-const listDiaryEntrys = `
-  query GetByCreatedAt {
-    getDiaryEntrysByCreatedAt(type: "Set", sortDirection: DESC) {
-      items {
-        id
-        title
-        body
-        score
-        createdAt
-      }
-    }
- }
-`
-const createDiaryEntry = `
-  mutation($title: String!, $body: String, $score: Int!) {
-    createDiaryEntry(input: {
-      title: $title
-      type: "Set"
-      body: $body
-      score: $score
-  }) {
-    id
-    title
-    body
-    score
-  }
-}`
+      options: [
+        {
+          value: 1,
+          label: 'Yes',
+          trigger: 'happy-resources',
+        },
+        { value: 2, label: 'No Thanks :)', trigger: 'happy-end' },
+      ],
+    },
+    {
+      id: 'happy-end',
+      message:
+        'Thanks for coming to talk today, looking forward to speaking soon :)',
+      end: true,
+    },
+    {
+      id: 'happy-resources',
+      message:
+        'Check out these self care tips from Mind UK for keeping your mood up:\nMind uk (mind.org.uk) suggest some self care tips\nSelf-care\nDoing little things to look after your wellbeing can be really important.\nIt might be:\n* getting enough sleep\n* doing something you find relaxing, like listening to music or watching your favourite film\n* doing something you enjoy, like a favourite hobby or spending time with people you love * spending time in nature, like going for a walk or visiting a local park \n* getting active by going for a run, bike ride or playing a sport you enjoy.',
+      end: true,
+    },
+    {
+      id: 'unhappy',
+      message:
+        "I'm sorry to hear that, which of the following best describes how you're feeling?",
+      trigger: 'unhappyOptions',
+    },
+    {
+      id: 'unhappyOptions',
+      options: [
+        { value: 1, label: "I'm Anxious", trigger: 'anxiousResources' },
+        { value: 2, label: 'Feeling Low', trigger: 'low' },
+      ],
+    },
+    {
+      id: 'anxiousResources',
+      message: 'Would you like self help resources or someone to talk to?',
+      trigger: 'anxious',
+    },
+    {
+      id: 'anxious',
+      options: [
+        { value: 1, label: 'Self Help', trigger: 'anxious-self-help' },
+        {
+          value: 2,
+          label: 'Someone to talk to',
+          trigger: 'anxious-someone-to-talk-to',
+        },
+      ],
+    },
+    {
+      id: 'anxious-someone-to-talk-to',
+      message: `Checkout Anxiety UK:  
+        http://www.anxietyuk.org.uk
+        Phone: 03444 775 774 (Monday to Friday, 9.30am to 10pm; Saturday to Sunday, 10am to 8pm)`,
+      end: true,
+    },
+    {
+      id: 'anxious-self-help',
+      message:
+        'Corona Virus induced anxiety is common check out this blog on how to cope with anxiety in these trying times-https://www.anxietyuk.org.uk/blog/covid-19-and-anxiety-part2/',
+      end: true,
+    },
+    {
+      id: 'low',
+      message: 'Would you like self help resources or someone to talk to?',
+      trigger: 'low-options',
+    },
+    {
+      id: 'low-options',
+      options: [
+        { value: '1', label: 'Self Help', trigger: 'low-self-help' },
+        {
+          value: '2',
+          label: 'Someone to talk to',
+          trigger: 'low-someone-to-talk-to',
+        },
+      ],
+    },
+    {
+      id: 'low-self-help',
+      message:
+        'Mind uk (mind.org.uk) suggest some self care tips\nSelf-care\nDoing little things to look after your wellbeing can be really important. It might be:\n* getting enough sleep\n* doing something you find relaxing, like listening to music or watching your favourite film\n* doing something you enjoy, like a favourite hobby or spending time with people you love\n* spending time in nature, like going for a walk or visiting a local park\n* getting active by going for a run, bike ride or playing a sport you enjoy.\nThe nhs also has some good tips that can be found here:https://www.nhs.uk/conditions/stress-anxiety-depression/feel-better-and-happy/',
+      end: true,
+    },
+    {
+      id: 'low-someone-to-talk-to',
+      message:
+        'Below is from NHS:\ntry talking about your feelings to a friend, family member, health professional or counsellor.\nYou could also contact Samaritans, call: 116 123 or email: jo@samaritans.org if you need someone to talk to\nBelow is from NHS:\ntry talking about your feelings to a friend, family member, health professional or counsellor.\nYou could also contact Samaritans, call: 116 123 or email: jo@samaritans.org if you need someone to talk to',
+      end: true,
+    },
+  ];
 
-class App extends React.Component {
-  state = {
-    title: "",
-    body: "",
-    score: 0,
-    DiaryEntrys: []
-  };
-  async componentDidMount() {
-    try {
-      const graphqldata = await API.graphql(graphqlOperation(listDiaryEntrys));
-      console.log("graphqldata:", graphqldata);
-      this.setState({
-        DiaryEntrys: graphqldata.data.getDiaryEntrysByCreatedAt.items,
-      });
-    } catch (err) {
-      console.log("error: ", err);
-    }
-  }
-  onChangeText = (key, val) => {
-    this.setState({
-      [key]: val,
-    });
-  };
-
-  change(score) {
-    this.setState(() => {
-      return {
-        score: parseFloat(score)
-      };
-    });
-  }
-  createDiaryEntry = async () => {
-    const DiaryEntry = this.state;
-    if (DiaryEntry.name === "" || DiaryEntry.description === "") return;
-    const DiaryEntrys = [ DiaryEntry,...this.state.DiaryEntrys];
-    this.setState({
-      DiaryEntrys,
-      title: "",
-      body: "",
-      score: "0",
-    });
-    try {
-      await API.graphql(graphqlOperation(createDiaryEntry, DiaryEntry));
-      console.log("Diary Entry successfully created.");
-    } catch (err) {
-      console.log("error creating Diary Entry...", err);
-    }
-  };
-  render() {
-    // const { value } = this.state;
     return (
       
       <View style={styles.container}>
         <ScrollView>
-        <Text style={styles.question}>How would you rate your day out of 10?</Text>
-        <View style={styles.splitFlex}>
-          <View style={styles.leftFlex}>
-            <Slider
-              step={1}
-              maximumValue={10}
-              onValueChange={this.change.bind(this)}
-              value={this.state.score}
-            />
+          <View style={styles.contentContainer}>
+            <ChatBot steps={steps} />
           </View>
-          <View style={styles.rightFlex}>
-            <Text style={styles.ratingText}>{String(this.state.score)}</Text>
-          </View>
-        </View>
-        <TextInput
-          style={styles.input}
-          onChangeText={val => this.onChangeText("title", val)}
-          placeholder="Entry Title"
-          value={this.state.title}
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={val => this.onChangeText("body", val)}
-          placeholder="Entry Body"
-          value={this.state.body}
-        />
-        
-        <Button onPress={this.createDiaryEntry} title="Add Entry" />
-        {
-          this.state.DiaryEntrys.map((DiaryEntry, index) => (
-            <View key={index} style={styles.item}>
-              <View style={styles.leftFlex}>
-                <Text style={styles.date}>{moment(DiaryEntry.createdAt).format('ddd MMMM Do')}</Text>
-                <Text style={styles.title}>{DiaryEntry.title}</Text>
-                <Text style={styles.body}>{DiaryEntry.body}</Text>
-              </View>
-              <View style={styles.rightFlex}>
-                <Text adjustsFontSizeToFit style={styles.scoreText}>{DiaryEntry.score}</Text>
-              </View>
-            </View>
-          ))
-        }
         </ScrollView>
       </View>
-      
-    );
-  }
+  );
 }
 
-export default App
+
+export default ChatScreen
 
 const styles = StyleSheet.create({
-  input: {
-    height: 45,
-    borderBottomWidth: 2,
-    borderBottomColor: "black",
-    marginVertical: 10,
-  },
-  item: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    paddingVertical: 10,
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start'
-  },
-  name: {
-    fontSize: 16,
-  },
-  description: {
-    color: "rgba(0, 0, 0, .5)",
-  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    paddingHorizontal: 10,
-    paddingTop: 50,
+    backgroundColor: '#fafafa',
   },
-  title: {
-    fontWeight: "bold",
-    fontSize: 16
+  contentContainer: {
+    height: '100%',
   },
-  date: {
-    fontWeight: "bold",
-    fontSize: 20
+  optionIconContainer: {
+    marginRight: 12,
   },
-  splitFlex: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+  option: {
+    backgroundColor: '#fdfdfd',
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 0,
+    borderColor: '#ededed',
   },
-  leftFlex: {
-    width: '85%',
+  lastOption: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  rightFlex: {
-    width: '15%',
-  },
-  body: {
-    fontStyle: 'italic',
-  },
-  scoreText: {
-    fontSize: 50,
-    textAlign: 'center',
-  },
-  ratingText: {
-    fontSize: 36,
-    textAlign: 'center',
-  },
-  question: {
-    textAlign: 'center',
-    fontSize: 20,
+  optionText: {
+    fontSize: 15,
+    alignSelf: 'flex-start',
+    marginTop: 1,
   },
 });
-
