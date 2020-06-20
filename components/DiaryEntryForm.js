@@ -84,6 +84,11 @@ class DiaryEntryForm extends React.Component {
       console.log("error creating Diary Entry...", err);
     }
   };
+
+  submitAndTrigger = () => {
+    this.createDiaryEntry();
+  }
+
   render() {
     return (
       
@@ -115,7 +120,8 @@ class DiaryEntryForm extends React.Component {
           value={this.state.body}
         />
         
-        <Button onPress={this.createDiaryEntry} title="Add Entry" />
+        <Button onPress={this.submitAndTrigger} title="Add Entry" />
+        
       </View>
       
     );
