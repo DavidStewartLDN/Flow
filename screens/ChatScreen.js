@@ -16,7 +16,7 @@ function ChatScreen(){
       trigger: 'diaryQuestionOptions',
     },
     {
-      id: 'DiaryQuestionOptions',
+      id: 'diaryQuestionOptions',
       options: [
         { value: 1, label: 'Yes', trigger: 'diaryEntry' },
         { value: 2, label: 'No, just here to talk', trigger: 'talk' },
@@ -25,7 +25,7 @@ function ChatScreen(){
     {
       id: 'diaryEntry',
       message: 'How would you rate your day out of 10?',
-      trigger: 'happy-options',
+      trigger: 'thanks',
     },
     {
       id: 'talk',
@@ -33,9 +33,9 @@ function ChatScreen(){
       end: true,
     },
     {
-      id: 'happy',
-      message: 'Thats great would you like some self help tips?',
-      trigger: 'happy-options',
+      id: 'thanks',
+      message: "Let's stop there for now",
+      end: true,
     },
     // {
     //   id: 'happy-options',
