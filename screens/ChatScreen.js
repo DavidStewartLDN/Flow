@@ -30,6 +30,12 @@ function ChatScreen(){
     {
       id: 'scoreForDay',
       user: true,
+      validator: (value) => {
+        if (isNaN(value)) {
+          return 'value should be a number';
+        }
+        return true;
+      },
       trigger: 'thanks',
     },
     {
