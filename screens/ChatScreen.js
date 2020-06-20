@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import ChatBot from 'react-native-chatbot-expo';
+import DiaryEntryForm from '../components/DiaryEntryForm'
 
 function ChatScreen(){
 
@@ -36,6 +37,12 @@ function ChatScreen(){
         }
         return true;
       },
+      trigger: 'test',
+    },
+    {
+      id: 'test',
+      component: <DiaryEntryForm/>,
+      waitAction: true,
       trigger: 'thanks',
     },
     {
