@@ -25,6 +25,11 @@ function ChatScreen(){
     {
       id: 'diaryEntry',
       message: 'How would you rate your day out of 10?',
+      trigger: 'scoreForDay',
+    },
+    {
+      id: 'scoreForDay',
+      user: true,
       trigger: 'thanks',
     },
     {
