@@ -36,7 +36,7 @@ const createDiaryEntry = `
   }
 }`
 
-class App extends React.Component {
+class DiaryEntryForm extends React.Component {
   state = {
     title: "",
     body: "",
@@ -122,7 +122,7 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default DiaryEntryForm
 
 const styles = StyleSheet.create({
   input: {
