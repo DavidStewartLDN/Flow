@@ -42,7 +42,7 @@ function ChatScreen(){
       id: 'anxious',
       component:<Text
       onPress={() => WebBrowser.openBrowserAsync('https://www.youtube.com/watch?v=Wdbbtgf05Ek')}>
-        Try watching this breathing techniques video
+        Click on this message to watch breathing techniques video
       </Text>,
       asMessage: true,
       trigger: 'diaryQuestion'
