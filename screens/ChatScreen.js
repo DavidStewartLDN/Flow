@@ -9,7 +9,53 @@ function ChatScreen(){
     {
       id: 'welcome',
       message: "Hello, how are you feeling now?",
-      trigger: 'diaryQuestion',
+      trigger: 'welcomeOptions',
+    },
+    {
+      id: 'welcomeOptions',
+      options: [
+        { value: 1, label: 'happy', trigger: 'happy' },
+        { value: 2, label: 'sad', trigger: 'sad' },
+      ],
+    },
+    {
+      id: 'happy',
+      message: 'Glad to hear that',
+      trigger: 'diaryQuestion'
+    },
+    {
+      id: 'sad',
+      message: 'I am sorry to hear that, what describes your emotions better?',
+      trigger: 'sadOptions'
+    },
+    {
+      id: 'sadOptions',
+      options: [
+        { value: 1, label: 'anxious', trigger: 'anxious' },
+        { value: 2, label: 'depressed', trigger: 'depressed' },
+        { value: 3, label: 'stressed', trigger: 'stressed' },
+        { value: 4, label: 'other', trigger: 'other' },
+      ],
+    },
+    {
+      id: 'anxious',
+      message: 'I am sorry to hear that',
+      trigger: 'diaryQuestion'
+    },
+    {
+      id: 'depressed',
+      message: 'I am sorry to hear that',
+      trigger: 'diaryQuestion'
+    },
+    {
+      id: 'stressed',
+      message: 'I am sorry to hear that',
+      trigger: 'diaryQuestion'
+    },
+    {
+      id: 'other',
+      message: 'I am sorry to hear that',
+      trigger: 'diaryQuestion'
     },
     {
       id: 'diaryQuestion',
