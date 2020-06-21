@@ -8,19 +8,19 @@ Amplify.configure(config);
 
 import API, { graphqlOperation } from "@aws-amplify/api";
 
-const listDiaryEntrys = `
-  query GetByCreatedAt {
-    getDiaryEntrysByCreatedAt(type: "Set", sortDirection: DESC) {
-      items {
-        id
-        title
-        body
-        score
-        createdAt
-      }
-    }
- }
-`
+// const listDiaryEntrys = `
+//   query GetByCreatedAt {
+//     getDiaryEntrysByCreatedAt(type: "Set", sortDirection: DESC) {
+//       items {
+//         id
+//         title
+//         body
+//         score
+//         createdAt
+//       }
+//     }
+//  }
+// `
 const createDiaryEntry = `
   mutation($title: String!, $body: String, $score: Int!) {
     createDiaryEntry(input: {
@@ -41,19 +41,19 @@ class DiaryEntryForm extends React.Component {
     title: "",
     body: "",
     score: 0,
-    DiaryEntrys: []
+    // DiaryEntrys: []
   };
-  async componentDidMount() {
-    try {
-      const graphqldata = await API.graphql(graphqlOperation(listDiaryEntrys));
-      console.log("graphqldata:", graphqldata);
-      this.setState({
-        DiaryEntrys: graphqldata.data.getDiaryEntrysByCreatedAt.items,
-      });
-    } catch (err) {
-      console.log("error: ", err);
-    }
-  }
+  // async componentDidMount() {
+  //   try {
+  //     const graphqldata = await API.graphql(graphqlOperation(listDiaryEntrys));
+  //     console.log("graphqldata:", graphqldata);
+  //     this.setState({
+  //       DiaryEntrys: graphqldata.data.getDiaryEntrysByCreatedAt.items,
+  //     });
+  //   } catch (err) {
+  //     console.log("error: ", err);
+  //   }
+  // }
   onChangeText = (key, val) => {
     this.setState({
       [key]: val,
@@ -70,9 +70,9 @@ class DiaryEntryForm extends React.Component {
   createDiaryEntry = async () => {
     const DiaryEntry = this.state;
     if (DiaryEntry.name === "" || DiaryEntry.description === "") return;
-    const DiaryEntrys = [ DiaryEntry,...this.state.DiaryEntrys];
+    // const DiaryEntrys = [ DiaryEntry,...this.state.DiaryEntrys];
     this.setState({
-      DiaryEntrys,
+      // DiaryEntrys,
       title: "",
       body: "",
       score: "0",
