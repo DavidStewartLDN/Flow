@@ -25,22 +25,22 @@ function ChatScreen(){
     },
     {
       id: 'diaryEntry',
-      message: 'How would you rate your day out of 10?',
+      message: 'Please put how you are feeling now, good or bad, happy or sad',
       trigger: 'scoreForDay',
     },
+    // {
+    //   id: 'scoreForDay',
+    //   user: true,
+    //   validator: (value) => {
+    //     if (isNaN(value)) {
+    //       return 'value should be a number';
+    //     }
+    //     return true;
+    //   },
+    //   trigger: 'test',
+    // },
     {
       id: 'scoreForDay',
-      user: true,
-      validator: (value) => {
-        if (isNaN(value)) {
-          return 'value should be a number';
-        }
-        return true;
-      },
-      trigger: 'test',
-    },
-    {
-      id: 'test',
       component: <DiaryEntryForm/>,
       // waitAction: true,
       trigger: 'thanks',
