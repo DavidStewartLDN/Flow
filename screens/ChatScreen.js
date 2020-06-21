@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
+import * as WebBrowser from 'expo-web-browser';
 import ChatBot from 'react-native-chatbot-expo';
 import DiaryEntryForm from '../components/DiaryEntryForm'
 
@@ -39,7 +40,11 @@ function ChatScreen(){
     },
     {
       id: 'anxious',
-      message: 'I am sorry to hear that',
+      component:<Text
+      onPress={() => WebBrowser.openBrowserAsync('https://www.youtube.com/watch?v=Wdbbtgf05Ek')}>
+        Try watching this breathing techniques video
+      </Text>,
+      asMessage: true,
       trigger: 'diaryQuestion'
     },
     {
