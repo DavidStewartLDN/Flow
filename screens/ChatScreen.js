@@ -42,7 +42,7 @@ function ChatScreen(){
     {
       id: 'test',
       component: <DiaryEntryForm/>,
-      waitAction: true,
+      // waitAction: true,
       trigger: 'thanks',
     },
     {
