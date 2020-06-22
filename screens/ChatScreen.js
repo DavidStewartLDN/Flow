@@ -76,7 +76,7 @@ function ChatScreen(){
     },
     {
       id: 'diaryEntry',
-      message: 'Please put how you are feeling now, good or bad, happy or sad',
+      message: 'Fill in your diary with however you are feeling at the moment!',
       trigger: 'scoreForDay',
     },
     // {
