@@ -58,7 +58,11 @@ function ChatScreen(){
     },
     {
       id: 'stressed',
-      message: 'I am sorry to hear that',
+      component:<Text
+      onPress={() => WebBrowser.openBrowserAsync('https://www.globalnlptraining.com/blog/5-easy-ways-reduce-stress-using-nlp/')}>
+        Click on this message to read about reducing stress by dissociating from the stress
+      </Text>,
+      asMessage: true,
       trigger: 'diaryQuestion'
     },
     {
