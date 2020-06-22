@@ -49,7 +49,11 @@ function ChatScreen(){
     },
     {
       id: 'depressed',
-      message: 'I am sorry to hear that',
+      component:<Text
+      onPress={() => WebBrowser.openBrowserAsync('https://unleashyourpotential.org.uk/how-i-let-go-of-depression-with-time-line-therapy/')}>
+        Click on this message to read about using Time Line Therpay for easing depression but letting go of negative emotions
+      </Text>,
+      asMessage: true,
       trigger: 'diaryQuestion'
     },
     {
