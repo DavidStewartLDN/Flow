@@ -3,21 +3,21 @@ import { Animated, Text, View, StyleSheet, Button } from "react-native";
 
 export default function BreathingScreen() {
   // fadeAnim will be used as the value for opacity. Initial Value: 0
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const sizeAnim = useRef(new Animated.Value(0)).current;
 
   const fadeIn = () => {
     // Will change fadeAnim value to 1 in 5 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 5000
+    Animated.timing(sizeAnim, {
+      toValue: 200,
+      duration: 3000
     }).start();
   };
 
   const fadeOut = () => {
     // Will change fadeAnim value to 0 in 5 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 5000
+    Animated.timing(sizeAnim, {
+      toValue: 100,
+      duration: 6000
     }).start();
   };
 
@@ -27,15 +27,16 @@ export default function BreathingScreen() {
         style={[
           styles.fadingContainer,
           {
-            opacity: fadeAnim // Bind opacity to animated value
+            width: sizeAnim,
+            height: sizeAnim
           }
         ]}
       >
-        <Text style={styles.fadingText}>Fading View!</Text>
+        {/* <Text style={styles.fadingText}> </Text> */}
       </Animated.View>
       <View style={styles.buttonRow}>
-        <Button title="Fade In" onPress={fadeIn} />
-        <Button title="Fade Out" onPress={fadeOut} />
+        <Button title="Breathe In" onPress={fadeIn} />
+        <Button title="Breathe Out" onPress={fadeOut} />
       </View>
     </View>
   );
@@ -48,8 +49,9 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   fadingContainer: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    width: 200,
+    height: 200,
+    borderRadius: 100,
     backgroundColor: "powderblue"
   },
   fadingText: {

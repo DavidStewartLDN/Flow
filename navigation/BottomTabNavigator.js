@@ -95,5 +95,7 @@ function getHeaderTitle(route) {
       return 'Score history';
     case 'Links':
       return 'Links to learn more';
+    case 'Breathing':
+      return "Let's breathe";
   }
 }
