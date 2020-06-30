@@ -35,7 +35,6 @@ function ChatScreen(){
         { value: 1, label: 'anxious', trigger: 'anxious' },
         { value: 2, label: 'depressed', trigger: 'depressed' },
         { value: 3, label: 'stressed', trigger: 'stressed' },
-        { value: 4, label: 'other', trigger: 'other' },
       ],
     },
     {
