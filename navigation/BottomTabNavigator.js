@@ -8,6 +8,7 @@ import LinksScreen from '../screens/LinksScreen';
 import DiaryScreen from '../screens/DiaryScreen';
 import ScoreScreen from '../screens/ScoreScreen';
 import ChatScreen from '../screens/ChatScreen';
+import BreathingScreen from '../screens/BreathingScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -55,6 +56,16 @@ export default function BottomTabNavigator({ navigation, route }) {
           title: 'Scores',
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-stats" />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Breathing"
+        component={BreathingScreen}
+        options={{
+          title: 'Breathing',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="ios-color-filter" />
           ),
         }}
       />
