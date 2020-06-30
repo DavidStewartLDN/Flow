@@ -35,7 +35,6 @@ function ChatScreen(){
         { value: 1, label: 'anxious', trigger: 'anxious' },
         { value: 2, label: 'depressed', trigger: 'depressed' },
         { value: 3, label: 'stressed', trigger: 'stressed' },
-        { value: 4, label: 'other', trigger: 'other' },
       ],
     },
     {
@@ -65,11 +64,6 @@ function ChatScreen(){
       asMessage: true,
       trigger: 'diaryQuestion'
     },
-    // {
-    //   id: 'other',
-    //   message: 'I am sorry to hear that',
-    //   trigger: 'diaryQuestion'
-    // },
     {
       id: 'diaryQuestion',
       message: "Would you like to make a diary entry?",
