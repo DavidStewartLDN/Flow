@@ -64,11 +64,6 @@ function ChatScreen(){
       asMessage: true,
       trigger: 'diaryQuestion'
     },
-    // {
-    //   id: 'other',
-    //   message: 'I am sorry to hear that',
-    //   trigger: 'diaryQuestion'
-    // },
     {
       id: 'diaryQuestion',
       message: "Would you like to make a diary entry?",
