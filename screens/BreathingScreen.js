@@ -23,10 +23,17 @@ export default function BreathingScreen() {
 
   const infiniteLoop = () => {
     // Will change fadeAnim value to 0 in 5 seconds
-    Animated.loop(Animated.timing(sizeAnim, {
-      toValue: 100,
-      duration: 6000
-    })).start();
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(sizeAnim, {
+        toValue: 100,
+        duration: 6000
+        }),
+        Animated.timing(sizeAnim, {
+          toValue: 0,
+          duration: 6000
+        }),
+      ])).start();
   };
 
   return (
