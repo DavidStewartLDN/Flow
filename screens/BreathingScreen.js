@@ -4,9 +4,9 @@ import { Animated, Easing, View, StyleSheet, Button } from "react-native";
 export default function BreathingScreen() {
   const initialSize = 50;
   const maxSize = 200;
-  const standardTime = 5000;
+  const standardTime = 4000;
   const delayTime = 500;
-  const inBreathDelta = 3000;
+  const inBreathDelta = 1000;
   // fadeAnim will be used as the value for opacity. Initial Value:
   const sizeAnim = useRef(new Animated.Value(initialSize)).current;
 
