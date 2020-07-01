@@ -21,6 +21,14 @@ export default function BreathingScreen() {
     }).start();
   };
 
+  const infiniteLoop = () => {
+    // Will change fadeAnim value to 0 in 5 seconds
+    Animated.loop(Animated.timing(sizeAnim, {
+      toValue: 100,
+      duration: 6000
+    })).start();
+  };
+
   return (
     <View style={styles.container}>
       <Animated.View
@@ -37,6 +45,7 @@ export default function BreathingScreen() {
       <View style={styles.buttonRow}>
         <Button title="Breathe In" onPress={fadeIn} />
         <Button title="Breathe Out" onPress={fadeOut} />
+        <Button title="Infinite" onPress={infiniteLoop} />
       </View>
     </View>
   );
