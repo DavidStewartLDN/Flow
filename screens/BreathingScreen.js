@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Animated, Text, View, StyleSheet, Button } from "react-native";
 
 export default function BreathingScreen() {
-  // fadeAnim will be used as the value for opacity. Initial Value: 0
+  // fadeAnim will be used as the value for opacity. Initial Value:
   const sizeAnim = useRef(new Animated.Value(0)).current;
 
   const fadeIn = () => {
@@ -30,9 +30,10 @@ export default function BreathingScreen() {
         duration: 6000
         }),
         Animated.timing(sizeAnim, {
-          toValue: 0,
+          toValue: 10,
           duration: 6000
         }),
+        Animated.delay(1000),
       ])).start();
   };
 
