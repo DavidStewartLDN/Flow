@@ -6,13 +6,14 @@ export default function BreathingScreen() {
   const maxSize = 200;
   const standardTime = 5000;
   const delayTime = 500;
+  const inBreathDelta = 3000;
   // fadeAnim will be used as the value for opacity. Initial Value:
   const sizeAnim = useRef(new Animated.Value(initialSize)).current;
 
   const fadeIn = () => {
     // Will change fadeAnim value to 1 in 5 seconds
     Animated.timing(sizeAnim, {
-      toValue: 200,
+      toValue: maxSize,
       duration: 3000
     }).start();
   };
@@ -20,7 +21,7 @@ export default function BreathingScreen() {
   const fadeOut = () => {
     // Will change fadeAnim value to 0 in 5 seconds
     Animated.timing(sizeAnim, {
-      toValue: 100,
+      toValue: initialSize,
       duration: 6000
     }).start();
   };
@@ -31,7 +32,7 @@ export default function BreathingScreen() {
         Animated.timing(sizeAnim, {
         toValue: maxSize,
         easing: Easing.inOut(Easing.sin),
-        duration: standardTime - 1000
+        duration: standardTime - inBreathDelta
         }),
         Animated.timing(sizeAnim, {
           toValue: initialSize,
