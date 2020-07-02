@@ -8,6 +8,7 @@ import LinksScreen from '../screens/LinksScreen';
 import DiaryScreen from '../screens/DiaryScreen';
 import ScoreScreen from '../screens/ScoreScreen';
 import ChatScreen from '../screens/ChatScreen';
+import BreathingScreen from '../screens/BreathingScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Chat';
@@ -51,6 +52,16 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
+        name="Breathing"
+        component={BreathingScreen}
+        options={{
+          title: 'Breathing',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="ios-color-filter" />
+          ),
+        }}
+      />
+      <BottomTab.Screen
         name="Links"
         component={LinksScreen}
         options={{
@@ -74,5 +85,7 @@ function getHeaderTitle(route) {
       return 'Score history';
     case 'Links':
       return 'Links to learn more';
+    case 'Breathing':
+      return "Let's breathe";
   }
 }
