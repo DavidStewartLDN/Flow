@@ -1,4 +1,4 @@
-#Flow
+# Flow
 
 An app to help you on you mindfulness journey through thought journaling and breathing exercises
 
