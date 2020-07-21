@@ -1,6 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Button, Slider, ScrollView } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, ScrollView } from "react-native";
 import moment from "moment";
+
+import Slider from '@react-native-community/slider';
 
 import Amplify from "@aws-amplify/core";
 import config from "../aws-exports";
