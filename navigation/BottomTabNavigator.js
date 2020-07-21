@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import DiaryScreen from '../screens/DiaryScreen';
 import ScoreScreen from '../screens/ScoreScreen';
